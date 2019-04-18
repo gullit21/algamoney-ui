@@ -21,4 +21,12 @@
             <button pButton type="submit" label="Pesquisar"></button>
         </div>
     </div>
+
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <p-datatable [value]="lancamentos">
+                <p-column field="pessoa"></p-column>
+            </p-datatable>
+        </div>
+    </div>
 </div>
