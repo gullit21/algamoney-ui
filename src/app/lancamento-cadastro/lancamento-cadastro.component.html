@@ -26,17 +26,17 @@
 
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Valor</label>
-        <input pInputText type="text" placeholder="0,00">
+        <input pInputText type="text" placeholder="0,00" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }">
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Categoria</label>
-        <input pInputText type="text">
+        <label>Categoria {{ categoria.value }}</label>
+        <p-dropdown [options]="categorias" [autoWidth]="false" placeholder="Selecione" #categoria></p-dropdown>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
-        <input pInputText type="text">
+        <p-dropdown [options]="pessoas" [autoWidth]="false" placeholder="Selecione" [filter]="true"></p-dropdown>
       </div>
 
       <div class="ui-g-12 ui-fluid">
