@@ -1,5 +1,11 @@
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { ConfirmationService } from 'primeng/api';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { LazyLoadEvent } from 'primeng/components/common/api';
+
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
-import { Component, OnInit } from '@angular/core';
+import { ToastaService, ToastOptions } from 'ngx-toasta';
 
 @Component({
     selector: 'app-lancamentos-pesquisa',
@@ -8,16 +14,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
+    totalRegistros = 0;
     filtro = new LancamentoFiltro();
     lancamentos = [];
+    @ViewChild('tabela') grid;
 
-    constructor(private lancamentoService: LancamentoService) { }
+    constructor(
+        private lancamentoService: LancamentoService,
+        private toastaService: ToastaService,
+        private confirmationService: ConfirmationService,
+        private errorHandlerService: ErrorHandlerService
+    ) { }
 
     ngOnInit(): void {
-        this.pesquisar();
+
     }
 
-    pesquisar() {
+    pesquisar(pagina = 0) {
+        this.filtro.pagina = pagina;
+
         this.lancamentoService.pesquisar(this.filtro).subscribe(
             response => {
                 const responseJson = response;
@@ -27,9 +42,41 @@ export class LancamentosPesquisaComponent implements OnInit {
                     lancamentos,
                     total: responseJson.totalElements
                 };
-                console.log(resultado);
 
                 this.lancamentos = resultado.lancamentos;
+                this.totalRegistros = resultado.total;
+            },
+            error => {
+                this.errorHandlerService.handle(error);
+            }
+        );
+    }
+
+    aoMudarPagina(event: LazyLoadEvent) {
+        const pagina = event.first / event.rows;
+        this.pesquisar(pagina);
+    }
+
+    confimarExclusao(lancamento: any) {
+        this.confirmationService.confirm({
+            message: 'Tem certeza que deseja excluir?',
+            accept: () => {
+                this.excluir(lancamento);
+            }
         });
+    }
+
+    excluir(lancamento: any) {
+        this.lancamentoService.excluir(lancamento.codigo).subscribe(
+            () => {
+                const pagina = this.grid.first / this.grid.rows;
+                this.pesquisar(pagina);
+
+                this.toastaService.success('Lançamento excluído com sucesso!');
+            },
+            error => {
+                this.errorHandlerService.handle(error);
+            }
+        );
     }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastaConfig } from 'ngx-toasta';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+    constructor(private toastaConfig: ToastaConfig) {
+        this.toastaConfig.theme = 'bootstrap';
+    }
 }

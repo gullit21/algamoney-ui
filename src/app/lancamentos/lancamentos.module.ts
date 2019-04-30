@@ -14,15 +14,13 @@ import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 
-import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 
 
 @NgModule({
     declarations: [LancamentoCadastroComponent,
-        LancamentosPesquisaComponent,
-        LancamentosGridComponent
+        LancamentosPesquisaComponent
     ],
     imports: [
         CommonModule,

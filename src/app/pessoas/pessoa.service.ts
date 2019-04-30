@@ -1,12 +1,9 @@
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
 
-export class LancamentoFiltro {
-    descricao: string;
-    dataVencimentoInicio: Date;
-    dataVencimentoFim: Date;
+export class PessoaFiltro {
+    nome: string;
     // tslint:disable-next-line: no-inferrable-types
     pagina: number = 0;
     // tslint:disable-next-line: no-inferrable-types
@@ -16,28 +13,20 @@ export class LancamentoFiltro {
 @Injectable({
     providedIn: 'root'
 })
-export class LancamentoService {
+export class PessoaService {
 
-    lancamentoUrl = 'http://localhost:8080/lancamentos';
+    lancamentoUrl = 'http://localhost:8080/pessoas';
 
     constructor(private http: HttpClient) { }
 
-    pesquisar(filtro: LancamentoFiltro): Observable<any> {
+    pesquisar(filtro: PessoaFiltro): Observable<any> {
         let params = new HttpParams();
 
         params = params.append('page', `${filtro.pagina}`);
         params = params.append('size', filtro.itensPorPagina ? `${filtro.itensPorPagina}` : '5');
 
-        if (filtro.descricao) {
-            params = params.append('descricao', filtro.descricao);
-        }
-
-        if (filtro.dataVencimentoInicio) {
-            params = params.append('dataVencimentoDe', moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
-        }
-
-        if (filtro.dataVencimentoFim) {
-            params = params.append('dataVencimentoAte', moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
+        if (filtro.nome) {
+            params = params.append('nome', filtro.nome);
         }
 
         const httpOptions = {
@@ -48,7 +37,18 @@ export class LancamentoService {
             params
         };
 
-        return this.http.get(`${this.lancamentoUrl}?resumo`, httpOptions);
+        return this.http.get(`${this.lancamentoUrl}`, httpOptions);
+    }
+
+    listarTodas(): Observable<any> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+            })
+        };
+
+        return this.http.get(`${this.lancamentoUrl}`, httpOptions);
     }
 
     excluir(codigo: number): Observable<{}> {

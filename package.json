@@ -25,6 +25,7 @@
     "install": "^0.12.2",
     "moment": "^2.24.0",
     "ng2-currency-mask": "^5.3.1",
+    "ngx-toasta": "^0.1.0",
     "npm": "^6.9.0",
     "primeicons": "^1.0.0",
     "primeng": "^7.1.1",
