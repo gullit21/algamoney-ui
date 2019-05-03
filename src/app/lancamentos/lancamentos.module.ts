@@ -16,6 +16,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -25,6 +26,8 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     imports: [
         CommonModule,
         FormsModule,
+        RouterModule,
+
         CurrencyMaskModule,
         SelectButtonModule,
         CalendarModule,

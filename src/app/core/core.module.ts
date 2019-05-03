@@ -10,11 +10,13 @@ import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { CategoriaService } from './../categorias/categoria.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [NavbarComponent],
     imports: [
         CommonModule,
+        RouterModule,
 
         ToastaModule.forRoot(),
         ConfirmDialogModule
