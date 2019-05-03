@@ -6,6 +6,7 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { ToastaService, ToastOptions } from 'ngx-toasta';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-lancamentos-pesquisa',
@@ -23,11 +24,12 @@ export class LancamentosPesquisaComponent implements OnInit {
         private lancamentoService: LancamentoService,
         private toastaService: ToastaService,
         private confirmationService: ConfirmationService,
-        private errorHandlerService: ErrorHandlerService
+        private errorHandlerService: ErrorHandlerService,
+        private title: Title
     ) { }
 
     ngOnInit(): void {
-
+        this.title.setTitle('Pesquisa de lançamentos');
     }
 
     pesquisar(pagina = 0) {

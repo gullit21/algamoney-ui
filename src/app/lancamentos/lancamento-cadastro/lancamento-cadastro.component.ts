@@ -10,6 +10,7 @@ import { LancamentoService } from './../lancamento.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { Lancamento } from 'src/app/core/model';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class LancamentoCadastroComponent implements OnInit {
         private toastaService: ToastaService,
         private errorHandlerService: ErrorHandlerService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private title: Title
     ) { }
 
     ngOnInit() {
@@ -46,6 +48,8 @@ export class LancamentoCadastroComponent implements OnInit {
 
         this.carregarCategorias();
         this.carregarPessoas();
+
+        this.title.setTitle('Novo lançamento');
     }
 
     get editando() {
@@ -87,6 +91,8 @@ export class LancamentoCadastroComponent implements OnInit {
             lancamento => {
                 this.converterStringsParaDatas([lancamento]);
                 this.lancamento = lancamento;
+
+                this.atualizarTituloEdicao();
             },
             error => {
                 this.errorHandlerService.handle(error);
@@ -97,7 +103,8 @@ export class LancamentoCadastroComponent implements OnInit {
     novo(form: FormControl) {
         form.reset();
 
-        setTimeout(function () {
+        //  Gambiarra para atualizar o lancamento com o Tipo setado.
+        setTimeout(function() {
             this.lancamento = new Lancamento();
         }.bind(this), 1);
 
@@ -132,11 +139,16 @@ export class LancamentoCadastroComponent implements OnInit {
 
                 this.converterStringsParaDatas([lancamento]);
                 this.lancamento = lancamento;
+                this.atualizarTituloEdicao();
             },
             error => {
                 this.errorHandlerService.handle(error);
             }
         );
+    }
+
+    atualizarTituloEdicao() {
+        this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
     }
 
     private converterStringsParaDatas(lancamentos: Lancamento[]) {

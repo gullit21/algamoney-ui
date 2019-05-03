@@ -3,6 +3,7 @@ import { PessoaService, PessoaFiltro } from './../pessoa.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastaService } from 'ngx-toasta';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-pessoas-pesquisa',
@@ -20,10 +21,13 @@ export class PessoasPesquisaComponent implements OnInit {
         private pessoaSerivce: PessoaService,
         private toastaService: ToastaService,
         private confirmationService: ConfirmationService,
-        private errorHandlerService: ErrorHandlerService) { }
+        private errorHandlerService: ErrorHandlerService,
+        private title: Title
+    ) { }
 
     ngOnInit(): void {
         this.pesquisar();
+        this.title.setTitle('Pesquisa de pessoas');
     }
 
     pesquisar(pagina = 0) {

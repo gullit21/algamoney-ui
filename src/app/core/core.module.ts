@@ -11,9 +11,11 @@ import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { CategoriaService } from './../categorias/categoria.service';
 import { RouterModule } from '@angular/router';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { Title } from '@angular/platform-browser';
 
 @NgModule({
-    declarations: [NavbarComponent],
+    declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
     imports: [
         CommonModule,
         RouterModule,
@@ -33,6 +35,7 @@ import { RouterModule } from '@angular/router';
         CategoriaService,
 
         ConfirmationService,
+        Title,
         {
             provide: LOCALE_ID, useValue: 'pt-BR'
         }
