@@ -1,3 +1,4 @@
+import { Lancamento } from './../core/model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -60,5 +61,16 @@ export class LancamentoService {
         };
 
         return this.http.delete(`${this.lancamentoUrl}/${codigo}`, httpOptions);
+    }
+
+    adicionar(lancamento: Lancamento): Observable<any> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+            })
+        };
+
+        return this.http.post(`${this.lancamentoUrl}`, JSON.stringify(lancamento), httpOptions);
     }
 }

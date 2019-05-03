@@ -1,3 +1,4 @@
+import { Pessoa } from './../core/model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,7 +16,7 @@ export class PessoaFiltro {
 })
 export class PessoaService {
 
-    lancamentoUrl = 'http://localhost:8080/pessoas';
+    pessoaUrl = 'http://localhost:8080/pessoas';
 
     constructor(private http: HttpClient) { }
 
@@ -37,7 +38,7 @@ export class PessoaService {
             params
         };
 
-        return this.http.get(`${this.lancamentoUrl}`, httpOptions);
+        return this.http.get(`${this.pessoaUrl}`, httpOptions);
     }
 
     listarTodas(): Observable<any> {
@@ -48,7 +49,7 @@ export class PessoaService {
             })
         };
 
-        return this.http.get(`${this.lancamentoUrl}`, httpOptions);
+        return this.http.get(`${this.pessoaUrl}`, httpOptions);
     }
 
     excluir(codigo: number): Observable<{}> {
@@ -59,6 +60,28 @@ export class PessoaService {
             })
         };
 
-        return this.http.delete(`${this.lancamentoUrl}/${codigo}`, httpOptions);
+        return this.http.delete(`${this.pessoaUrl}/${codigo}`, httpOptions);
+    }
+
+    mudarStatus(codigo: number, ativo: boolean): Observable<any> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+            })
+        };
+
+        return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, httpOptions);
+    }
+
+    adicionar(pessoa: Pessoa): Observable<any> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+            })
+        };
+
+        return this.http.post(`${this.pessoaUrl}`, JSON.stringify(pessoa), httpOptions);
     }
 }
