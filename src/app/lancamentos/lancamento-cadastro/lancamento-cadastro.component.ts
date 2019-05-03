@@ -1,12 +1,16 @@
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ToastaService } from 'ngx-toasta';
+import { ActivatedRoute } from '@angular/router';
+
+import * as moment from 'moment';
 
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { LancamentoService } from './../lancamento.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { Lancamento } from 'src/app/core/model';
+
 
 @Component({
     selector: 'app-lancamento-cadastro',
@@ -29,18 +33,27 @@ export class LancamentoCadastroComponent implements OnInit {
         private pessoaService: PessoaService,
         private lancamentoService: LancamentoService,
         private toastaService: ToastaService,
-        private errorHandlerService: ErrorHandlerService
+        private errorHandlerService: ErrorHandlerService,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
+        const codigoLancamento = this.route.snapshot.params.codigo;
+        if (codigoLancamento) {
+            this.carregarLancamento(codigoLancamento);
+        }
+
         this.carregarCategorias();
         this.carregarPessoas();
+    }
+
+    get editando() {
+        return Boolean(this.lancamento.codigo);
     }
 
     carregarCategorias() {
         return this.categoriaService.listarTodas().subscribe(
             categorias => {
-                console.log(categorias);
                 this.categorias = categorias.map(
                     categoriaAux => {
                         return { label: categoriaAux.nome, value: categoriaAux.codigo };
@@ -56,7 +69,6 @@ export class LancamentoCadastroComponent implements OnInit {
     carregarPessoas() {
         return this.pessoaService.listarTodas().subscribe(
             pessoas => {
-                console.log(pessoas.content);
                 this.pessoas = pessoas.content.map(
                     pessoaAux => {
                         return { label: pessoaAux.nome, value: pessoaAux.codigo };
@@ -69,8 +81,28 @@ export class LancamentoCadastroComponent implements OnInit {
         )
     }
 
+    carregarLancamento(codigo: number) {
+        this.lancamentoService.buscarPorCodigo(codigo).subscribe(
+            lancamento => {
+                this.converterStringsParaDatas([lancamento]);
+                this.lancamento = lancamento;
+            },
+            error => {
+                this.errorHandlerService.handle(error);
+            }
+        );
+    }
+
+
     salvar(form: FormControl) {
-        console.log(this.lancamento);
+        if (this.editando) {
+            this.atualizarLancamento(form);
+        } else {
+            this.adicionarLancamento(form);
+        }
+    }
+
+    adicionarLancamento(form: FormControl) {
         this.lancamentoService.adicionar(this.lancamento).subscribe(
             () => {
                 this.toastaService.success('Lançamento adicionado com sucesso!');
@@ -82,5 +114,32 @@ export class LancamentoCadastroComponent implements OnInit {
                 this.errorHandlerService.handle(error);
             }
         );
+    }
+
+    atualizarLancamento(form: FormControl) {
+        this.lancamentoService.atualizar(this.lancamento).subscribe(
+            lancamento => {
+                this.toastaService.success('Lançamento alterado com sucesso!');
+
+                this.converterStringsParaDatas([lancamento]);
+                this.lancamento = lancamento;
+            },
+            error => {
+                this.errorHandlerService.handle(error);
+            }
+        );
+    }
+
+    private converterStringsParaDatas(lancamentos: Lancamento[]) {
+        for (const lanc of lancamentos) {
+            if (lanc.dataPagamento) {
+                lanc.dataPagamento = moment(lanc.dataPagamento, 'YYYY-MM-DD').toDate();
+            }
+
+            if (lanc.dataVencimento) {
+                lanc.dataVencimento = moment(lanc.dataVencimento, 'YYYY-MM-DD').toDate();
+            }
+        }
+
     }
 }

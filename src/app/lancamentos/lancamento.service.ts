@@ -73,4 +73,26 @@ export class LancamentoService {
 
         return this.http.post(`${this.lancamentoUrl}`, JSON.stringify(lancamento), httpOptions);
     }
+
+    atualizar(lancamento: Lancamento): Observable<Lancamento> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+            })
+        };
+
+        return this.http.put<Lancamento>(`${this.lancamentoUrl}/${lancamento.codigo}`, JSON.stringify(lancamento), httpOptions);
+    }
+
+    buscarPorCodigo(codigo: number): Observable<Lancamento> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+            })
+        };
+
+        return this.http.get<Lancamento>(`${this.lancamentoUrl}/${codigo}`, httpOptions);
+    }
 }
