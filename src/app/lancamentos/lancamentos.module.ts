@@ -20,7 +20,8 @@ import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-    declarations: [LancamentoCadastroComponent,
+    declarations: [
+        LancamentoCadastroComponent,
         LancamentosPesquisaComponent
     ],
     imports: [
