@@ -73,7 +73,6 @@ export class PessoaCadastroComponent implements OnInit {
     }
 
     adicionarPessoa(form: FormControl) {
-        console.log(this.pessoa);
         this.pessoaService.adicionar(this.pessoa).subscribe(
             () => {
                 this.toastaService.success('Pessoa adicionada com sucesso!');
@@ -90,7 +89,7 @@ export class PessoaCadastroComponent implements OnInit {
     atualizarPessoa(form: FormControl) {
         this.pessoaService.atualizar(this.pessoa).subscribe(
             pessoa => {
-                this.toastaService.success('Lançamento alterado com sucesso!');
+                this.toastaService.success('Pessoa alterada com sucesso!');
 
                 this.pessoa = pessoa;
                 this.atualizarTituloEdicao();

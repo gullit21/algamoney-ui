@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastaConfig } from 'ngx-toasta';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,14 @@ import { ToastaConfig } from 'ngx-toasta';
 })
 export class AppComponent {
 
-    constructor(private toastaConfig: ToastaConfig) {
+    constructor(
+        private toastaConfig: ToastaConfig,
+        private router: Router
+    ) {
         this.toastaConfig.theme = 'bootstrap';
+    }
+
+    exibindoNavBar() {
+        return this.router.url !== '/login';
     }
 }

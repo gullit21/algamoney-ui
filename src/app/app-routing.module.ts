@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { LoginFormComponent } from './seguranca/login-form/login-form.component';
 import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
@@ -9,6 +10,8 @@ import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadast
 
 const routes: Routes = [
     { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
+
+    { path: 'login', component: LoginFormComponent },
 
     { path: 'lancamentos', component: LancamentosPesquisaComponent },
     { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
