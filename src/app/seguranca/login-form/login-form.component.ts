@@ -15,6 +15,7 @@ export class LoginFormComponent {
   login(usuario: string, senha: string) {
     this.authService.login(usuario, senha).subscribe(
         response => {
+            this.authService.armazenarToken(response.access_token);
             console.log(response);
         },
         error => {

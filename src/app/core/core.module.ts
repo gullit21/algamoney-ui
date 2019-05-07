@@ -1,6 +1,7 @@
 import { AuthService } from './../seguranca/auth.service';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { ToastaModule } from 'ngx-toasta';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -38,6 +39,7 @@ import { Title } from '@angular/platform-browser';
 
         ConfirmationService,
         Title,
+        JwtHelperService,
         {
             provide: LOCALE_ID, useValue: 'pt-BR'
         }
