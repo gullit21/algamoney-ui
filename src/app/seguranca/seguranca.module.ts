@@ -11,6 +11,10 @@ import { ButtonModule } from 'primeng/components/button/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../../environments/environment';
 
+export function tokenGetter() {
+    return localStorage.getItem('token');
+}
+
 @NgModule({
     declarations: [LoginFormComponent],
     imports: [
@@ -19,9 +23,7 @@ import { environment } from '../../environments/environment';
         RouterModule,
         JwtModule.forRoot({
             config: {
-                tokenGetter: () => {
-                    return localStorage.getItem('token');
-                },
+                tokenGetter: tokenGetter,
                 whitelistedDomains: environment.tokenWhiteListedDomains,
                 blacklistedRoutes: environment.tokenBlackListedDomains
             }

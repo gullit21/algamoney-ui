@@ -3,6 +3,9 @@ export const environment = {
   apiUrl: 'https://algamoney-gti-api.herokuapp.com',
     // apiUrl: 'http://localhost:8080',
 
-  tokenWhiteListedDomains: [ /algamoney-gti-api.herokuapp.com/ ],
-  tokenBlackListedDomains: [ /\/oauth\/token/ ]
+    tokenWhiteListedDomains: [ new RegExp('algamoney-gti-api.herokuapp.com') ],
+    tokenBlackListedDomains: [ new RegExp('\/oauth\/token') ]
+
+//   tokenWhiteListedDomains: [ /algamoney-gti-api.herokuapp.com/ ],
+//   tokenBlackListedDomains: [ /\/oauth\/token/ ]
 };

@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+    exibindoMenu = false;
+
     constructor(
         private authService: AuthService,
         private logoutService: LogoutService,
@@ -27,5 +29,16 @@ export class NavbarComponent implements OnInit {
                 this.router.navigate(['/login']);
             })
             .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    temPermissao(role: string) {
+        this.authService.temPermissao(role);
+    }
+
+    get nome() {
+        if (this.authService.jwtPayload) {
+            return this.authService.jwtPayload.nome;
+        }
+        return '';
     }
 }
