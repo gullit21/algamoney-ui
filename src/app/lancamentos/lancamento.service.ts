@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { MoneyHttp } from './../seguranca/money-http';
 import { Lancamento } from './../core/model';
 import { Injectable } from '@angular/core';
@@ -20,9 +21,11 @@ export class LancamentoFiltro {
 })
 export class LancamentoService {
 
-    lancamentoUrl = 'http://localhost:8080/lancamentos';
+    lancamentoUrl: string;
 
-    constructor(private http: MoneyHttp) { }
+    constructor(private http: MoneyHttp) {
+        this.lancamentoUrl = `${environment.apiUrl}/lancamentos`;
+    }
 
     pesquisar(filtro: LancamentoFiltro): Observable<any> {
         let params = new HttpParams();

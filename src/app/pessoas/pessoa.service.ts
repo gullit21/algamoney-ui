@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { MoneyHttp } from './../seguranca/money-http';
 import { Pessoa } from './../core/model';
 import { HttpParams, HttpHeaders } from '@angular/common/http';
@@ -17,9 +18,11 @@ export class PessoaFiltro {
 })
 export class PessoaService {
 
-    pessoaUrl = 'http://localhost:8080/pessoas';
+    pessoaUrl: string;
 
-    constructor(private http: MoneyHttp) { }
+    constructor(private http: MoneyHttp) {
+        this.pessoaUrl = `${environment.apiUrl}/pessoas`;
+    }
 
     pesquisar(filtro: PessoaFiltro): Observable<any> {
         let params = new HttpParams();
