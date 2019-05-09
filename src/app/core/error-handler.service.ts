@@ -22,7 +22,7 @@ export class ErrorHandlerService {
 
                 msg = errorResponse.error[0].mensagemUsuario;
             } catch (e) {
-                console.error('Ocorreu um erro', errorResponse);
+                console.log('Ocorreu um erro', errorResponse);
             }
 
         } else {

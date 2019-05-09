@@ -13,6 +13,7 @@ export class AppComponent {
         private toastaConfig: ToastaConfig,
         private router: Router
     ) {
+        // localStorage.removeItem('token');
         this.toastaConfig.theme = 'bootstrap';
     }
 

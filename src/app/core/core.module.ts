@@ -1,7 +1,6 @@
 import { AuthService } from './../seguranca/auth.service';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { ToastaModule } from 'ngx-toasta';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -15,6 +14,7 @@ import { CategoriaService } from './../categorias/categoria.service';
 import { RouterModule } from '@angular/router';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { Title } from '@angular/platform-browser';
+import { MoneyHttp } from '../seguranca/money-http';
 
 @NgModule({
     declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
@@ -36,10 +36,10 @@ import { Title } from '@angular/platform-browser';
         PessoaService,
         CategoriaService,
         AuthService,
+        MoneyHttp,
 
         ConfirmationService,
         Title,
-        JwtHelperService,
         {
             provide: LOCALE_ID, useValue: 'pt-BR'
         }

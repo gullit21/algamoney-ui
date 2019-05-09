@@ -1,5 +1,6 @@
+import { MoneyHttp } from './../seguranca/money-http';
 import { Pessoa } from './../core/model';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -18,7 +19,7 @@ export class PessoaService {
 
     pessoaUrl = 'http://localhost:8080/pessoas';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: MoneyHttp) { }
 
     pesquisar(filtro: PessoaFiltro): Observable<any> {
         let params = new HttpParams();
@@ -31,10 +32,6 @@ export class PessoaService {
         }
 
         const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            }),
             params
         };
 
@@ -42,68 +39,38 @@ export class PessoaService {
     }
 
     listarTodas(): Observable<any> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.get(`${this.pessoaUrl}`, httpOptions);
+        return this.http.get(`${this.pessoaUrl}`);
     }
 
     excluir(codigo: number): Observable<{}> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.delete(`${this.pessoaUrl}/${codigo}`, httpOptions);
+        return this.http.delete(`${this.pessoaUrl}/${codigo}`);
     }
 
     mudarStatus(codigo: number, ativo: boolean): Observable<any> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
             })
         };
 
         return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, httpOptions);
     }
 
-    adicionar(pessoa: Pessoa): Observable<any> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.post(`${this.pessoaUrl}`, JSON.stringify(pessoa), httpOptions);
+    adicionar(pessoa: Pessoa): Observable<Pessoa> {
+        return this.http.post<Pessoa>(`${this.pessoaUrl}`, pessoa);
     }
 
     atualizar(pessoa: Pessoa): Observable<Pessoa> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
             })
         };
 
-        return this.http.put<Pessoa>(`${this.pessoaUrl}/${pessoa.codigo}`, JSON.stringify(pessoa), httpOptions);
+        return this.http.put<Pessoa>(`${this.pessoaUrl}/${pessoa.codigo}`, pessoa, httpOptions);
     }
 
     buscarPorCodigo(codigo: number): Observable<Pessoa> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.get<Pessoa>(`${this.pessoaUrl}/${codigo}`, httpOptions);
+        return this.http.get<Pessoa>(`${this.pessoaUrl}/${codigo}`);
     }
 }

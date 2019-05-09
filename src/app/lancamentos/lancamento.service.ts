@@ -1,6 +1,7 @@
+import { MoneyHttp } from './../seguranca/money-http';
 import { Lancamento } from './../core/model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
@@ -21,7 +22,7 @@ export class LancamentoService {
 
     lancamentoUrl = 'http://localhost:8080/lancamentos';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: MoneyHttp) { }
 
     pesquisar(filtro: LancamentoFiltro): Observable<any> {
         let params = new HttpParams();
@@ -42,10 +43,6 @@ export class LancamentoService {
         }
 
         const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            }),
             params
         };
 
@@ -53,46 +50,18 @@ export class LancamentoService {
     }
 
     excluir(codigo: number): Observable<{}> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.delete(`${this.lancamentoUrl}/${codigo}`, httpOptions);
+        return this.http.delete(`${this.lancamentoUrl}/${codigo}`);
     }
 
-    adicionar(lancamento: Lancamento): Observable<any> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.post(`${this.lancamentoUrl}`, JSON.stringify(lancamento), httpOptions);
+    adicionar(lancamento: Lancamento): Observable<Lancamento> {
+        return this.http.post<Lancamento>(`${this.lancamentoUrl}`, lancamento);
     }
 
     atualizar(lancamento: Lancamento): Observable<Lancamento> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.put<Lancamento>(`${this.lancamentoUrl}/${lancamento.codigo}`, JSON.stringify(lancamento), httpOptions);
+        return this.http.put<Lancamento>(`${this.lancamentoUrl}/${lancamento.codigo}`, lancamento);
     }
 
     buscarPorCodigo(codigo: number): Observable<Lancamento> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-            })
-        };
-
-        return this.http.get<Lancamento>(`${this.lancamentoUrl}/${codigo}`, httpOptions);
+        return this.http.get<Lancamento>(`${this.lancamentoUrl}/${codigo}`);
     }
 }

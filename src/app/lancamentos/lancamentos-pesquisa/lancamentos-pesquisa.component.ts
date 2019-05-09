@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
-import { ToastaService, ToastOptions } from 'ngx-toasta';
+import { ToastaService } from 'ngx-toasta';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -37,12 +37,11 @@ export class LancamentosPesquisaComponent implements OnInit {
 
         this.lancamentoService.pesquisar(this.filtro).subscribe(
             response => {
-                const responseJson = response;
-                const lancamentos = responseJson.content;
+                const lancamentos = response.content;
 
                 const resultado = {
                     lancamentos,
-                    total: responseJson.totalElements
+                    total: response.totalElements
                 };
 
                 this.lancamentos = resultado.lancamentos;
