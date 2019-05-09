@@ -49,12 +49,16 @@ export class MoneyHttp extends HttpClient {
         if (this.auth.isAccessTokenInvalido()) {
             console.log('Requisição HTTP com access token inválido. Obtendo novo token...');
 
-            // descobrir uma maneira de executar o if somente após a execução da chamada para a renovação do Token
-            const aux = this.auth.obterNovoAccessToken();
-            if (!this.auth.isAccessTokenInvalido()) {
-                return fn();
-            }
+            const chamadaNovoAccessToken = this.auth.obterNovoAccessToken()
+                .then(() => {
+                    if (this.auth.isAccessTokenInvalido()) {
+                        throw new NotAuthenticatedError();
+                    }
 
+                    return fn().toPromise();
+                });
+
+            return observableFromPromise(chamadaNovoAccessToken);
         } else {
             return fn();
         }
