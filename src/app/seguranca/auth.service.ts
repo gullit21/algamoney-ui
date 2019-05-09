@@ -37,20 +37,6 @@ export class AuthService {
         localStorage.setItem('token', token);
     }
 
-    // obterNovoAccessToken() {
-    //     const httpOptions = {
-    //         headers: new HttpHeaders({
-    //             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-    //             Authorization: 'Basic YW5ndWxhcjpAbmd1bEByMA=='
-    //         }),
-    //         withCredentials: true
-    //     };
-
-    //     const body = 'grant_type=refresh_token';
-
-    //     return this.http.post<any>(`${this.oauthTokenUrl}`, body, httpOptions);
-    // }
-
     obterNovoAccessToken(): Promise<void> {
         const headers = new HttpHeaders()
             .append('Content-Type', 'application/x-www-form-urlencoded')
@@ -72,6 +58,11 @@ export class AuthService {
                 console.error('Erro ao renovar token.', response);
                 return Promise.resolve(null);
             });
+    }
+
+    limparAccessToken() {
+        localStorage.removeItem('token');
+        this.jwtPayload = null;
     }
 
     isAccessTokenInvalido() {

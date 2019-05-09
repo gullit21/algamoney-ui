@@ -1,3 +1,4 @@
+import { LogoutService } from './logout.service';
 import { AuthGuard } from './auth.guard';
 import { JwtModule } from '@auth0/angular-jwt';
 import { RouterModule } from '@angular/router';
@@ -31,7 +32,8 @@ import { environment } from '../../environments/environment';
         BrowserAnimationsModule
     ],
     providers: [
-        AuthGuard
+        AuthGuard,
+        LogoutService
     ]
 })
 export class SegurancaModule { }
