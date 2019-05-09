@@ -15,9 +15,10 @@ import { RouterModule } from '@angular/router';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { Title } from '@angular/platform-browser';
 import { MoneyHttp } from '../seguranca/money-http';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
 
 @NgModule({
-    declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
+    declarations: [NavbarComponent, PaginaNaoEncontradaComponent, NaoAutorizadoComponent],
     imports: [
         CommonModule,
         RouterModule,

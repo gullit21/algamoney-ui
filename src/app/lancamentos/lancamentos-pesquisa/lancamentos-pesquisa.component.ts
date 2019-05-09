@@ -7,6 +7,7 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { ToastaService } from 'ngx-toasta';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/seguranca/auth.service';
 
 @Component({
     selector: 'app-lancamentos-pesquisa',
@@ -22,6 +23,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
     constructor(
         private lancamentoService: LancamentoService,
+        private authService: AuthService,
         private toastaService: ToastaService,
         private confirmationService: ConfirmationService,
         private errorHandlerService: ErrorHandlerService,

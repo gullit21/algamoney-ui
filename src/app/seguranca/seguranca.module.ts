@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth.guard';
 import { JwtModule } from '@auth0/angular-jwt';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -28,6 +29,9 @@ import { environment } from '../../environments/environment';
         InputTextModule,
         ButtonModule,
         BrowserAnimationsModule
+    ],
+    providers: [
+        AuthGuard
     ]
 })
 export class SegurancaModule { }
