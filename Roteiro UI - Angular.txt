@@ -6,3 +6,15 @@ UI
 4 - Adicionar validação nos formulários
 5 - Exibir erros de validação
 6 - Estilizar campos de erros
+
+7 - Criar componente de mensagens
+
+8 - Separar módulos
+
+9 - Criar serviços HTTP
+
+10 - Adicionar paginação Lazy
+
+11 - Adicionar mensagens (growl) com ToastaService e confirmação de Exclusão com ConfirmDialogModule/ConfirmationService
+
+12 - 

@@ -19,7 +19,7 @@ export class LancamentosPesquisaComponent implements OnInit {
     totalRegistros = 0;
     filtro = new LancamentoFiltro();
     lancamentos = [];
-    @ViewChild('tabela') grid;
+    @ViewChild('tabela') grid; // atributo recebe o p-table pela #tabela
 
     constructor(
         private lancamentoService: LancamentoService,
